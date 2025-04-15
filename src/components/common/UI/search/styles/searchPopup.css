@@ -1,0 +1,114 @@
+/* Animation mượt mà khi popup xuất hiện */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container chính của popup */
+.search-popup-drawer {
+    position: fixed;
+    top: 105px;
+    left: 25px;
+    width: 320px;
+    /* Chiều rộng cố định */
+    max-height: 80%;
+    /* Chiều cao tối đa 80% màn hình */
+    background: #fff;
+    /* Màu nền trắng */
+    z-index: 9999;
+    /* Trên cùng */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    /* Bo góc */
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Ẩn phần thừa */
+    animation: fadeInUp 0.3s ease forwards;
+    /* Hiệu ứng trượt lên */
+}
+
+/* Header của popup (tiêu đề + nút Đóng) */
+.search-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.search-popup-header h3 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Nội dung chính của popup */
+.search-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    /* Cho phép nội dung co giãn */
+}
+
+/* Mỗi hàng (row) cho input, select, nút */
+.search-popup-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    /* Canh giữa theo trục dọc */
+}
+
+/* Khu vực hiển thị kết quả */
+.search-popup-body {
+    flex: 1;
+    overflow-y: auto;
+    background: #fafafa;
+    /* Nền xám nhạt */
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* Dòng “Kết quả tìm được:” */
+.search-popup-body>b {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+/* Mỗi item kết quả */
+.search-popup-item {
+    cursor: pointer;
+    margin: 4px 0;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Hiệu ứng hover item */
+.search-popup-item:hover {
+    background-color: #e6f7ff;
+    /* Màu hover xanh nhạt */
+}
+
+/* Footer chứa phân trang */
+.search-popup-footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Tăng z-index dropdown cao hơn 9999 */
+.ant-select-dropdown {
+    z-index: 10000 !important;
+}

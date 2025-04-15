@@ -1,0 +1,107 @@
+/* src/components/Navbar/Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    height: 60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Bóng nhẹ */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.project-name {
+    font-size: 24px;
+    /* Tăng kích thước chữ */
+    color: #2c3e50;
+    /* Màu xanh đậm, chuyên nghiệp */
+    font-weight: bold;
+    text-transform: uppercase;
+    /* Chữ in hoa */
+    letter-spacing: 1px;
+    /* Khoảng cách chữ nhẹ */
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-icon {
+    background: none;
+    border: none;
+    font-size: 22px;
+    /* Tăng kích thước icon */
+    cursor: pointer;
+    padding: 5px;
+    color: #333;
+    /* Màu icon tối */
+    transition: color 0.3s;
+    /* Hiệu ứng chuyển màu */
+}
+
+.nav-icon:hover {
+    color: #1877f2;
+    /* Màu xanh khi hover */
+}
+
+.auth-button {
+    font-size: 16px;
+    color: #333;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: color 0.2s, font-weight 0.2s;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.auth-button:hover {
+    color: #1877f2;
+    /* Màu xanh khi hover */
+    border-radius: 5px;
+}
+
+.auth-button:active {
+    color: #125ac9;
+    /* Màu đậm hơn khi click */
+    font-weight: bold;
+    /* Nhấn mạnh khi click */
+}
+
+/* Tăng z-index cho dropdown của AntD */
+.ant-dropdown {
+    z-index: 3 !important;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-left,
+    .navbar-right {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .auth-button {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+.ant-dropdown {
+    z-index: 10002 !important;
+}

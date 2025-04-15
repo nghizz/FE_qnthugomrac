@@ -1,0 +1,23 @@
+/* index.css (hoặc App.css, v.v.) */
+
+/* Đảm bảo html, body chiếm 100% chiều cao và không có scroll */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* Không cho hiển thị thanh cuộn */
+  box-sizing: border-box;
+}
+
+#root,
+/* Nếu bạn dùng create-react-app, #root là container chính */
+#app
+
+/* Hoặc container chính khác của dự án (nếu có) */
+  {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,69 @@
+/* src/pages/Home.css */
+
+/* Đảm bảo trang chiếm trọn màn hình và không có thanh cuộn */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    font-family: "Arial", sans-serif;
+}
+
+/* Navbar có chiều cao cố định */
+.navbar {
+    height: 60px;
+    /* Chiều cao cố định cho Navbar */
+    flex-shrink: 0;
+    z-index: 10001;
+    /* Đảm bảo Navbar nằm trên cùng */
+}
+
+/* MapComponent (bên trong là .map-container) chiếm toàn bộ không gian còn lại */
+.home-container .map-container {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #ddd;
+    z-index: 1;
+    /* Thấp hơn các nút và Navbar */
+}
+
+/* Vị trí nút search */
+.search-container {
+    position: absolute;
+    top: 70px;
+    /* Dưới Navbar (60px + khoảng cách 10px) */
+    left: 20px;
+    /* Cách lề trái cố định */
+    z-index: 10000;
+    /* Đảm bảo nút Search nằm trên bản đồ */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(189, 154, 154, 0.1);
+}
+
+#custom-notification-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2 !important;
+    /* Tăng cao hơn Navbar */
+    pointer-events: none;
+}
+
+#custom-notification-container .ant-notification-notice {
+    pointer-events: auto;
+}
+
+.ant-notification {
+    z-index: 10000 !important;
+    /* Notification dưới Navbar/Dropdown */
+}
+
+.navbar {
+    z-index: 10001;
+}

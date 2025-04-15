@@ -1,0 +1,50 @@
+/* src/pages/register/register.css */
+
+/* Toàn màn hình, đặt background ảnh */
+.layout {
+    min-height: 100vh;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url('/images/bg2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #cccccc; /* fallback */
+}
+
+/* Bỏ màu nền mặc định của .ant-layout */
+.layout .ant-layout {
+    background: transparent;
+}
+
+/* Thẻ container để giới hạn bề rộng */
+.container {
+    max-width: 408px;
+    margin: auto;
+}
+
+/* Tiêu đề lớn */
+.title {
+    text-align: center;
+    color: rgb(64, 150, 255) !important;
+    font-size: 30px;
+    letter-spacing: -0.04em;
+}
+
+/* Khu vực chứa logo (nếu muốn hiển thị logo như login) */
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.imageContainer img {
+    background: #fff;  /* Nền trắng, tạo vòng tròn */
+    border-radius: 50%;
+}
+
+.imageContainer > h1 {
+    color: #0c5692;
+}

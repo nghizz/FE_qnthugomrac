@@ -1,0 +1,55 @@
+/* src/pages/login/style.css */
+
+/* Đảm bảo layout full màn hình và background */
+.layout {
+    min-height: 100vh;
+    /* Đặt hình nền + overlay mờ */
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url('/images/bg2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Màu nền fallback trong trường hợp ảnh không load */
+    background-color: #cccccc;
+}
+
+/* Bỏ màu nền mặc định của .ant-layout bên trong (nếu cần) */
+.layout .ant-layout {
+    background: transparent;
+}
+
+/* Để card nằm chính giữa, ta đã dùng Row + Col trong code
+   Nên container chỉ cần max-width để giới hạn bề rộng */
+.container {
+    max-width: 408px;
+    margin: auto;
+}
+
+/* Tiêu đề của card */
+.title {
+    text-align: center;
+    color: rgb(64, 150, 255) !important;
+    font-size: 30px;
+    letter-spacing: -0.04em;
+}
+
+/* Khu vực chứa logo */
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+/* Logo */
+.imageContainer img {
+    background: #fff;  /* Màu nền logo (tròn) */
+    border-radius: 50%;
+}
+
+/* Tiêu đề nếu có trong imageContainer */
+.imageContainer > h1 {
+    color: #0c5692;
+}

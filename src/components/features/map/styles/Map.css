@@ -1,0 +1,34 @@
+/* src/components/Map/Map.css */
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #ffffff;
+  overflow: hidden;
+  z-index: 1; /* Đảm bảo map-container không đè lên các nút */
+}
+
+/* Đảm bảo OpenLayers viewport lấp đầy .map-container */
+.map-container .ol-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  outline: none;
+}
+
+/* Ẩn control zoom mặc định của OL */
+.map-container .ol-zoom {
+  display: none;
+}
+
+/* Tinh chỉnh điểm đỏ (marker người dùng) */
+.map-container .ol-layer-vector .ol-geometry-point {
+  cursor: pointer;
+}
+
+.map-container .ol-layer-vector .ol-geometry-point:hover {
+  transform: scale(1.1);
+}
