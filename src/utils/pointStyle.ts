@@ -11,10 +11,9 @@ export function getPointStyle(status: string): Style {
 
   return new Style({
     image: new CircleStyle({
-      radius: 5,
+      radius: 4,
       fill: new Fill({ color }),
       stroke: new Stroke({ color: "#000", width: 1.5 }),
     }),
   });
 }
-

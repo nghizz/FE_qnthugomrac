@@ -3,8 +3,6 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip, notification } from "antd";
 import SearchPopup, { SearchPoint } from "./seachPopup";
 import { getUserRole } from "../../../../utils/user";
-import { openDetailPopup } from "../../../features/notifications/detail";
-import { Point as ModelPoint, PointStatus } from "../../../../types/models/point";
 
 // Constants
 const GEOSERVER_URL = "http://localhost:8080/geoserver/gdt/wfs";
@@ -100,25 +98,10 @@ const Search: React.FC<SearchProps> = ({ onMoveToPoint }) => {
 
   const handlePointSelect = (pt: SearchPoint) => {
     onMoveToPoint(pt);
-
-    const detailPoint: ModelPoint = {
-      id: Number(pt.id),
-      name: pt.name,
-      type: pt.type,
-      status: "approved" as PointStatus,
-      toadox: pt.lat,
-      toadoy: pt.lon,
-      srid: 4326,
-      frequency: 0,
-      geom: `POINT(${pt.lon} ${pt.lat})`,
-      created_by: 0,
-      created_at: new Date().toISOString(),
-    };
-
-    openDetailPopup({
-      point: detailPoint,
-      onClose: () => {},
-    });    
+    
+    if (window.openDetailPopup) {
+      window.openDetailPopup(pt.lon, pt.lat, pt.name, pt.type);
+    }
   };
 
   return (

@@ -1,6 +1,8 @@
 export const API_URL = "http://localhost:5000";
 export const COLLECTION_POINT_ENDPOINT = `${API_URL}/collection-point`;
 export const NOTIFICATION_ENDPOINT = `${API_URL}/notifications`;
+export const MESSAGE_ENDPOINT = `${API_URL}/messages`;
+export const SOCKET_URL = API_URL;
 
 /* Point */
 export const POINT_TYPES = [

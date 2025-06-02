@@ -15,6 +15,8 @@ import Icon from "ol/style/Icon";
 import { getUserRole } from "../../../utils/user";
 import TileWMS from "ol/source/TileWMS";
 import { GEOSERVER_URL, DEFAULT_CENTER, DEFAULT_ZOOM, USER_ICON_URL, USER_ICON_SCALE, USER_FEATURE_ID } from "../../../constants";
+import PointsLayer from "../../layer/points";
+
 /**
  * Props interface for the Map component
  */
@@ -51,7 +53,7 @@ const Map: React.FC<MapProps> = ({ children, userLocation, onMapReady }) => {
   );
 
   /**
-   * WMS layer configuration for collection points
+   * WMS layer configuration for collection points from GeoServer
    */
   const [wmsLayer] = useState(() =>
     new TileLayer({
@@ -113,6 +115,7 @@ const Map: React.FC<MapProps> = ({ children, userLocation, onMapReady }) => {
 
     mapInstance.once("rendercomplete", () => {
       setIsMapReady(true);
+      console.log("Map render completed");
     });
 
     if (onMapReady) {
@@ -154,10 +157,27 @@ const Map: React.FC<MapProps> = ({ children, userLocation, onMapReady }) => {
 
     map.render();
   }, [userLocation, map, userLayer]);
+
+  // Debug logging
+  useEffect(() => {
+    if (map) {
+      const layers = map.getLayers().getArray();
+      console.log("Current map layers:", layers);
+      layers.forEach((layer, index) => {
+        console.log(`Layer ${index}:`, layer.get('name'), layer);
+      });
+    }
+  }, [map]);
+
   return (
     <MapContext.Provider value={{ map }}>
       <div ref={mapRef} className="map-container">
-        {isMapReady && children}
+        {isMapReady && (
+          <>
+            <PointsLayer />
+            {children}
+          </>
+        )}
       </div>
     </MapContext.Provider>
   );

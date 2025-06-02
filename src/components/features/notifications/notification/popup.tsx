@@ -11,6 +11,7 @@ interface PopupNotificationProps {
     name: string; 
     lat: number; 
     lng: number;
+    type: string;
     createdBy?: {
       id: number;
       username: string;
@@ -21,8 +22,6 @@ interface PopupNotificationProps {
   onAcceptAll: () => void;
   onRejectAll: () => void;
   onPointHover: (lat: number, lng: number) => void;
-  onPointClick?: (point: { id: string; name: string; lat: number; lng: number }) => void;
-  // Phân trang
   page: number;
   limit: number;
   total: number;
@@ -38,13 +37,18 @@ const PopupNotification: React.FC<PopupNotificationProps> = ({
   onAcceptAll,
   onRejectAll,
   onPointHover,
-  onPointClick,
   page,
   limit,
   total,
   onPageChange,
 }) => {
   if (!visible) return null;
+
+  const handlePointClick = (point: { name: string; lat: number; lng: number; type: string }) => {
+    if (window.openDetailPopup) {
+      window.openDetailPopup(point.lng, point.lat, point.name, point.type);
+    }
+  };
 
   return (
     <div className="popup-container">
@@ -97,8 +101,9 @@ const PopupNotification: React.FC<PopupNotificationProps> = ({
                 }
                 title={
                   <a 
-                    onClick={() => onPointClick?.(point)} 
+                    onClick={() => handlePointClick(point)} 
                     className="point-name"
+                    style={{ cursor: 'pointer' }}
                   >
                     {point.name}
                   </a>
@@ -111,7 +116,7 @@ const PopupNotification: React.FC<PopupNotificationProps> = ({
                     </div>
                     {point.createdBy && (
                       <div className="creator-info">
-                        Do người dùng có tên: <b>"{point.createdBy.username}"</b> thêm vào Map !
+                        Do người dùng có tên: <b>"{point.createdBy.username}"</b> thêm vào Map!
                       </div>
                     )}
                   </Space>
@@ -123,10 +128,14 @@ const PopupNotification: React.FC<PopupNotificationProps> = ({
             current: page,
             pageSize: limit,
             total: total,
-            onChange: (newPage, newSize) => onPageChange(newPage, newSize || limit),
+            onChange: (newPage, newPageSize) => {
+              //console.log(`Chuyển sang trang ${newPage}, kích thước ${newPageSize}`);
+              onPageChange(newPage, newPageSize);
+            },
             showSizeChanger: true,
             pageSizeOptions: ["5", "10", "20"],
-            className: "pagination"
+            className: "pagination",
+            showTotal: (total, range) => `${range[0]}-${range[1]} trong tổng số ${total} mục`,
           }}
         />
         <div className="footer-actions">

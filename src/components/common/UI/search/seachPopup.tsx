@@ -90,6 +90,7 @@ const SearchPopup: React.FC<SearchPopupProps> = ({
           </Button>
         </div>
 
+        {/* BODY chỉ scroll nội dung */}
         <div className="search-popup-body">
           {isLoading ? (
             <Spin style={{ margin: "8px 0" }} />
@@ -114,18 +115,20 @@ const SearchPopup: React.FC<SearchPopupProps> = ({
                   </Col>
                 ))}
               </Row>
-              <div className="search-popup-footer">
-                <Pagination
-                  current={currentPage}
-                  pageSize={PAGE_SIZE}
-                  total={searchResults.length}
-                  onChange={(p) => setCurrentPage(p)}
-                />
-              </div>
             </>
           ) : (
             <div className="no-results">Không tìm thấy kết quả nào.</div>
           )}
+        </div>
+
+        {/* FOOTER luôn nằm dưới cùng */}
+        <div className="search-popup-footer">
+          <Pagination
+            current={currentPage}
+            pageSize={PAGE_SIZE}
+            total={searchResults.length}
+            onChange={(p) => setCurrentPage(p)}
+          />
         </div>
       </div>
     </div>
