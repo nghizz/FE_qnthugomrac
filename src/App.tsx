@@ -1,4 +1,3 @@
-import React from "react";
 import { Refine } from "@refinedev/core";
 import { BrowserRouter } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 /* src/components/features/message/AdminMessageBox.tsx */
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { Button, List, Input, Card, Layout, Typography } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import MessageList from '../form/messageList';

@@ -4,9 +4,11 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { io, Socket, ManagerOptions, SocketOptions } from 'socket.io-client';
 import { SOCKET_URL } from '../constants';
 import { getAuthenToken, refreshToken } from '../authProvider';
-
-// Import the ConversationUser interface from AdminMessageBox
-import { ConversationUser } from '../components/features/message/AdminMessageBox';
+export interface ConversationUser {
+  id: number;
+  username: string;
+  avatar?: string;
+}
 
 export interface Message {
   id: number;

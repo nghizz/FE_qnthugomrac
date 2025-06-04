@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, notification } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
@@ -17,7 +17,6 @@ import { DEFAULT_PAGE, DEFAULT_LIMIT, PROJECT_NAME } from "../../../constants";
 import { useMapContext } from "../../../context/mapContext";
 import { fromLonLat } from "ol/proj";
 import { View } from "ol";
-import openDetailPopup from "../notifications/detail/popup";
 import { Point } from "../../../types/models/point";
 import { getUserUnreadCount } from "../../../api/endpoints/notifications/index";
 
@@ -170,21 +169,6 @@ const Navbar: FC = () => {
     }
   };
 
-  const handlePointClick = (p: {
-    id: string;
-    name: string;
-    lat: number;
-    lng: number;
-  }) => {
-    const full = pendingPoints.find((pt) => pt.id.toString() === p.id);
-    if (full) {
-      openDetailPopup({
-        point: full,
-        onClose: () => {},
-      });
-    }
-  };
-
   const menuItems = {
     items: [
       ...(user?.role === "admin"
@@ -268,6 +252,7 @@ const Navbar: FC = () => {
             name: point.name,
             lat: point.toadox as number,
             lng: point.toadoy as number,
+            type: point.type || 'default',
             createdBy: point.createdBy,
           }))}
         onAccept={handleAccept}
@@ -275,7 +260,6 @@ const Navbar: FC = () => {
         onAcceptAll={handleAcceptAll}
         onRejectAll={handleRejectAll}
         onPointHover={handlePointHover}
-        onPointClick={handlePointClick}
         page={page}
         limit={limit}
         total={total}

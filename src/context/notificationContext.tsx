@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { Notification } from "../types/models/notification";
 
 type NotificationContextType = {
   notifications: [];
@@ -8,20 +9,17 @@ type NotificationContextType = {
 };
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
-
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const [notifications, setNotifications] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const addNotification = (notification: any) => {
+  const addNotification = (notification: Notification) => {
     setNotifications((prev) => [...prev, notification]);
   };
-
   const markAsRead = (id: number) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
-
   return (
-    <NotificationContext.Provider value={{ notifications, addNotification, markAsRead }}>
+    <NotificationContext.Provider value={{ notifications: notifications as [], addNotification, markAsRead }}>
       {children}
     </NotificationContext.Provider>
   );
