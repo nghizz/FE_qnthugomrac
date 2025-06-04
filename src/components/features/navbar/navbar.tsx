@@ -11,7 +11,7 @@ import {
 } from "../../../api/endpoints/points";
 import PopupNotification from "../notifications/notification/popup";
 
-import "./Navbar.css";
+import "./navbar.css";
 import NotificationIcon from "../../common/app-icon/notification-icon";
 import { DEFAULT_PAGE, DEFAULT_LIMIT, PROJECT_NAME } from "../../../constants";
 import { useMapContext } from "../../../context/mapContext";
