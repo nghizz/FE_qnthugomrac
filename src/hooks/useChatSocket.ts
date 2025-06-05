@@ -2,7 +2,7 @@
 /* src/hooks/useChatSocket.ts */
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { io, Socket, ManagerOptions, SocketOptions } from 'socket.io-client';
-import { API_URL } from '../constants';
+import { SOCKET_URL } from '../constants';
 import { getAuthenToken, refreshToken } from '../authProvider';
 export interface ConversationUser {
   id: number;
@@ -65,7 +65,7 @@ export function useChatSocket({ onMessage, onConversations, onConversationHistor
     setIsConnected(false);
 
     // Initialize socket
-    const socket = io(`${API_URL}/chat`, {
+    const socket = io(`${SOCKET_URL}/chat`, {
       path: '/socket.io',
       transports: ['polling', 'websocket'],
       auth: { token },
