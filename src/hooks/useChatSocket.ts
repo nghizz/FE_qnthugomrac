@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { io, Socket, ManagerOptions, SocketOptions } from 'socket.io-client';
 import { SOCKET_URL } from '../constants';
 import { getAuthenToken, refreshToken } from '../authProvider';
+
 export interface ConversationUser {
   id: number;
   username: string;
@@ -48,6 +49,7 @@ export function useChatSocket({ onMessage, onConversations, onConversationHistor
     let refreshing = false;
     // If no token, teardown socket
     if (!token) {
+      console.warn('[WS] No token found, disconnecting socket');
       socketRef.current?.disconnect();
       socketRef.current = null;
       setIsConnected(false);
@@ -59,12 +61,14 @@ export function useChatSocket({ onMessage, onConversations, onConversationHistor
       if (existing === token) return;
     }
     // Cleanup previous
+    console.log('[WS] Cleaning up previous socket connection');
     socketRef.current?.off();
     socketRef.current?.disconnect();
     socketRef.current = null;
     setIsConnected(false);
 
     // Initialize socket
+    console.log(`[WS] Attempting to connect to ${SOCKET_URL}/chat`);
     const socket = io(`${SOCKET_URL}/chat`, {
       path: '/socket.io',
       transports: ['polling', 'websocket'],
@@ -73,8 +77,14 @@ export function useChatSocket({ onMessage, onConversations, onConversationHistor
       reconnectionDelay: 1000,
     } as Partial<SocketOptions & ManagerOptions>);
 
-    socket.on('connect', () => setIsConnected(true));
-    socket.on('disconnect', () => setIsConnected(false));
+    socket.on('connect', () => {
+      setIsConnected(true);
+      console.log('[WS] Connected');
+    });
+    socket.on('disconnect', (reason) => {
+      setIsConnected(false);
+      console.log(`[WS] Disconnected: ${reason}`);
+    });
 
     socket.on('connect_error', async (err: Error & { message: string }) => {
       console.error('[WS] connect_error', err.message);
@@ -91,13 +101,26 @@ export function useChatSocket({ onMessage, onConversations, onConversationHistor
     });
 
     // Register handlers
-    socket.on('message', (msg: Message) => msgHandlerRef.current(msg));
-    socket.on('conversations', (users: ConversationUser[]) => convHandlerRef.current?.(users));
-    socket.on('conversationHistory', (msgs: Message[]) => histHandlerRef.current?.(msgs));
-    socket.on('userConversationHistory', (msgs: Message[]) => userHistHandlerRef.current?.(msgs));
+    socket.on('message', (msg: Message) => {
+      console.log('[WS] Received message:', msg);
+      msgHandlerRef.current(msg);
+    });
+    socket.on('conversations', (users: ConversationUser[]) => {
+      console.log('[WS] Received conversations:', users);
+      convHandlerRef.current?.(users);
+    });
+    socket.on('conversationHistory', (msgs: Message[]) => {
+      console.log('[WS] Received conversationHistory:', msgs.length, 'messages');
+      histHandlerRef.current?.(msgs);
+    });
+    socket.on('userConversationHistory', (msgs: Message[]) => {
+      console.log('[WS] Received userConversationHistory:', msgs.length, 'messages');
+      userHistHandlerRef.current?.(msgs);
+    });
 
     socketRef.current = socket;
     return () => {
+      console.log('[WS] Cleaning up socket on effect cleanup');
       socket.off();
       socket.disconnect();
       socketRef.current = null;
@@ -107,15 +130,33 @@ export function useChatSocket({ onMessage, onConversations, onConversationHistor
 
   // Exposed methods with stable references
   const sendMessage = useCallback((data: { receiverId: number; content: string }) => {
-    if (socketRef.current?.connected) socketRef.current.emit('message', data);
+    console.log('[WS] Attempting to send message:', data);
+    if (socketRef.current?.connected) {
+      console.log('[WS] Socket connected, emitting message', data);
+      socketRef.current.emit('message', data);
+    } else {
+      console.warn('[WS] Socket not connected, cannot send message', data);
+    }
   }, []);
 
   const getConversations = useCallback(() => {
-    if (socketRef.current?.connected) socketRef.current.emit('getConversations');
+    console.log('[WS] Attempting to get conversations');
+    if (socketRef.current?.connected) {
+      console.log('[WS] Socket connected, emitting getConversations');
+      socketRef.current.emit('getConversations');
+    } else {
+      console.warn('[WS] Socket not connected, cannot get conversations');
+    }
   }, []);
 
   const loadConversation = useCallback((userId: number) => {
-    if (socketRef.current?.connected) socketRef.current.emit('loadConversation', { userId });
+    console.log(`[WS] Attempting to load conversation with user ${userId}`);
+    if (socketRef.current?.connected) {
+      console.log(`[WS] Socket connected, emitting loadConversation for user ${userId}`, { userId });
+      socketRef.current.emit('loadConversation', { userId });
+    } else {
+      console.warn(`[WS] Socket not connected, cannot load conversation for user ${userId}`);
+    }
   }, []);
 
   // Memoize return to prevent re-renders
