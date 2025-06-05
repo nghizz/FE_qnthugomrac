@@ -59,7 +59,7 @@ export const apiRequest = async <T>(
   const { auth, headers, params, ...rest } = options;
   
   // Nếu endpoint không phải là full URL, prefix với API_URL
-  const base = isFullUrl(endpoint) ? endpoint : API_URL + endpoint;
+  const base = isFullUrl(endpoint) ? endpoint : API_URL + endpoint;  //chính dòng này, kiểm tra endpoint có phải là full URL không nếu không thì thêm API_URL vào đằng trước
   const url = buildUrl(base, params);
   
   const finalHeaders: Record<string, string> = { ...(headers as Record<string, string>) };
