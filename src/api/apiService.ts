@@ -26,13 +26,13 @@ export const getAuthToken = (): string => {
 
 interface ApiRequestOptions extends RequestInit {
   auth?: boolean;               // Nếu true: thêm header Authorization
-  params?: Record<string, any>; // Query parameters
+  params?: Record<string, string | number | boolean>; // Query parameters
 }
 
 /**
  * Build URL với query params.
  */
-const buildUrl = (base: string, params?: Record<string, any>): string => {
+const buildUrl = (base: string, params?: Record<string, string | number | boolean>): string => {
   if (!params) return base;
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
@@ -47,7 +47,7 @@ const buildUrl = (base: string, params?: Record<string, any>): string => {
 /**
  * Kiểm tra endpoint có phải là URL đầy đủ không.
  */
-const isFullUrl = (url: string): boolean => /^http?:\/\//i.test(url);
+const isFullUrl = (url: string): boolean => /^https?:\/\//i.test(url);
 
 /**
  * Generic API request.
@@ -62,7 +62,7 @@ export const apiRequest = async <T>(
   const base = isFullUrl(endpoint) ? endpoint : API_URL + endpoint;
   const url = buildUrl(base, params);
   
-  const finalHeaders: Record<string, string> = { ...(headers as any) };
+  const finalHeaders: Record<string, string> = { ...(headers as Record<string, string>) };
 
   // Nếu yêu cầu auth, thêm token vào header Authorization
   if (auth) {
