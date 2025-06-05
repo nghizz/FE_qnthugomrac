@@ -1,6 +1,5 @@
 // src/api/point.ts
 import { apiRequest } from "../../apiService";
-import { COLLECTION_POINT_ENDPOINT } from "../../../constants";
 import {
   PaginatedResponse,
   Point,
@@ -18,7 +17,7 @@ export const getCollectionPoints = async (
   status?: string
 ): Promise<PaginatedResponse<Point>> =>
   apiRequest<PaginatedResponse<Point>>(
-    `${COLLECTION_POINT_ENDPOINT}/find`,
+    `/collection-point/find`,
     {
       // Không cần auth vì endpoint này không được bảo vệ
       method: "GET",
@@ -30,7 +29,7 @@ export const getCollectionPoints = async (
  *  -> Không cần token
  */
 export const getAllCollectionPoints = async (): Promise<Point[]> =>
-  apiRequest<Point[]>(COLLECTION_POINT_ENDPOINT, {
+  apiRequest<Point[]>("/collection-point", {
     // Không đặt auth:true ở đây bởi vì GET /collection-point không có guard
     method: "GET",
   });
@@ -41,7 +40,7 @@ export const getAllCollectionPoints = async (): Promise<Point[]> =>
 export const getCollectionPoint = async (
   id: number
 ): Promise<PointResponse> =>
-  apiRequest<PointResponse>(`${COLLECTION_POINT_ENDPOINT}/${id}`, {
+  apiRequest<PointResponse>(`/collection-point/${id}`, {
     method: "GET",
   });
 
@@ -51,7 +50,7 @@ export const getCollectionPoint = async (
 export const searchCollectionPoints = async (
   name: string
 ): Promise<Point[]> =>
-  apiRequest<Point[]>(`${COLLECTION_POINT_ENDPOINT}/search`, {
+  apiRequest<Point[]>(`/collection-point/search`, {
     auth: true,
     method: "GET",
     params: { name },
@@ -69,7 +68,7 @@ export const fetchPendingPointsPaginated = async (
 export const createCollectionPoint = async (
   payload: PointCreate
 ): Promise<PointResponse> =>
-  apiRequest<PointResponse>(COLLECTION_POINT_ENDPOINT, {
+  apiRequest<PointResponse>("/collection-point", {
     auth: true,
     method: "POST",
     body: JSON.stringify({
@@ -85,7 +84,7 @@ export const updateCollectionPoint = async (
   id: number,
   payload: PointUpdate
 ): Promise<PointResponse> =>
-  apiRequest<PointResponse>(`${COLLECTION_POINT_ENDPOINT}/${id}`, {
+  apiRequest<PointResponse>(`/collection-point/${id}`, {
     auth: true,
     method: "PATCH",
     body: JSON.stringify(payload),
@@ -97,7 +96,7 @@ export const updateCollectionPoint = async (
 export const deleteCollectionPoint = async (
   id: number
 ): Promise<void> =>
-  apiRequest<void>(`${COLLECTION_POINT_ENDPOINT}/${id}`, {
+  apiRequest<void>(`/collection-point/${id}`, {
     auth: true,
     method: "DELETE",
   });
@@ -109,7 +108,7 @@ export const reviewCollectionPoint = async (
   id: number,
   status: "approved" | "rejected"
 ): Promise<PointResponse> =>
-  apiRequest<PointResponse>(`${COLLECTION_POINT_ENDPOINT}/${id}/review`, {
+  apiRequest<PointResponse>(`/collection-point/${id}/review`, {
     auth: true,
     method: "PATCH",
     body: JSON.stringify({ status }),

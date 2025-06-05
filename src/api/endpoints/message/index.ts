@@ -1,28 +1,27 @@
 // src/api/endpoints/message.ts
-import { MESSAGE_ENDPOINT } from "../../../constants";
 import { apiRequest } from "../../apiService";
 
 export const getConversation = (otherId: number) =>
-  apiRequest(`${MESSAGE_ENDPOINT}/conversation/${otherId}`, {
+  apiRequest(`/message/conversation/${otherId}`, {
     auth: true,
     method: "GET",
   });
 
 export const sendMessage = (data: { receiverId: number; content: string }) =>
-  apiRequest(`${MESSAGE_ENDPOINT}`, {
+  apiRequest(`/message`, {
     auth: true,
     method: "POST",
     body: JSON.stringify(data),
   });
 
 export const getConversationsList = () =>
-  apiRequest(`${MESSAGE_ENDPOINT}/conversations`, {
+  apiRequest(`/message/conversations`, {
     auth: true,
     method: "GET",
   });
 
 export const patchMessageRead = (messageId: number) =>
-  apiRequest(`${MESSAGE_ENDPOINT}/${messageId}`, {
+  apiRequest(`/message/${messageId}`, {
     auth: true,
     method: "PATCH",
     body: JSON.stringify({ isRead: true }),
