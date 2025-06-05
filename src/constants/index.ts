@@ -1,4 +1,5 @@
-export const API_URL = "http://localhost:5000";
+// export const API_URL = "http://localhost:5000";
+export const API_URL = "https://be-qnthugomrac.onrender.com";
 export const COLLECTION_POINT_ENDPOINT = `${API_URL}/collection-point`;
 export const NOTIFICATION_ENDPOINT = `${API_URL}/notifications`;
 export const MESSAGE_ENDPOINT = `${API_URL}/messages`;
